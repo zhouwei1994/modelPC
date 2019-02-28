@@ -4,31 +4,25 @@
   </header>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
-    return {
-
-    }
+    return {};
   },
   mounted() {
     //获取用户信息
   },
   props: [],
-  computed: {
-
-  },
-  methods: {
-
-  },
-}
+  computed: {},
+  methods: {}
+};
 </script>
 <style lang="scss" scoped>
-@import '../../style/mixin';
-$headHeight:100px;
+@import "../../style/mixin";
+$headHeight: 100px;
 #headBox {
   height: $headHeight;
   text-align: center;
-  background-color: #2080D0;
+  background-color: #2080d0;
 }
 </style>

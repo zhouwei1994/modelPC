@@ -1,4 +1,4 @@
-import store from '@/config/store'
+import store from '@/config/store';
 export default {
   install(Vue) {
     //时间戳转换为时间 format('yyyy-MM-dd hh:mm:ss')
@@ -25,14 +25,14 @@ export default {
       }
       for (var k in date) {
         if (new RegExp("(" + k + ")").test(format)) {
-          format = format.replace(RegExp.$1, RegExp.$1.length == 1
-            ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+          format = format.replace(RegExp.$1, RegExp.$1.length == 1 ?
+            date[k] : ("00" + date[k]).substr(("" + date[k]).length));
         }
       }
       return format;
     }
     //时间戳转换为时间 format('yyyy-MM-dd hh:mm:ss')
-    Vue.filter("format", function (value, format) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
+    Vue.filter("format", function (value, format) { //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
       return Vue.prototype.formatTime(value, format);
     });
     Vue.prototype.clickDateDiff = function (value) {
@@ -45,7 +45,9 @@ export default {
       var month = day * 30;
       var now = new Date().getTime();
       var diffValue = parseInt(now) - parseInt(value);
-      if (diffValue < 0) { return; }
+      if (diffValue < 0) {
+        return;
+      }
       var monthC = diffValue / month;
       var weekC = diffValue / (7 * day);
       var dayC = diffValue / day;
@@ -53,17 +55,13 @@ export default {
       var minC = diffValue / minute;
       if (monthC >= 1) {
         result = "" + parseInt(monthC) + '月前';
-      }
-      else if (weekC >= 1) {
+      } else if (weekC >= 1) {
         result = "" + parseInt(weekC) + '周前';
-      }
-      else if (dayC >= 1) {
+      } else if (dayC >= 1) {
         result = "" + parseInt(dayC) + '天前';
-      }
-      else if (hourC >= 1) {
+      } else if (hourC >= 1) {
         result = "" + parseInt(hourC) + '小时前';
-      }
-      else if (minC >= 1) {
+      } else if (minC >= 1) {
         result = "" + parseInt(minC) + '分钟前';
       } else {
         result = '刚刚';
@@ -71,11 +69,11 @@ export default {
       return result;
     };
     //时间戳转换为XX天前
-    Vue.filter("getDateDiff", function (value) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
+    Vue.filter("getDateDiff", function (value) { //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
       return Vue.prototype.clickDateDiff(value);
     });
     //金额保留两位
-    Vue.filter("decimal", function (value) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
+    Vue.filter("decimal", function (value) { //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
       return parseFloat(value).toFixed(2);
     });
     //提示框
@@ -94,6 +92,7 @@ export default {
         deletes(htm);
         repeat = '';
       }, time);
+
       function deletes(htm) {
         htm.style.opacity = 0;
         htm.style.top = htm.offsetTop - 80 + 'px';

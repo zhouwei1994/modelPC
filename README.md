@@ -32,7 +32,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 │   │   ├── common                              // 公共组件
 │   │   │   ├── alertTip.vue                    // 弹出框组件
 │   │   │   ├── loading.vue                     // 页面初始化加载数据的动画组件
-│   │   │   ├── mixin.js                        // 组件混合(包括：指令-下拉加载更多，处理图片地址)
 │   │   ├── footer
 │   │   │   └── footGuide.vue                   // 底部公共组件
 │   │   └── header
@@ -42,7 +41,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 │   │   ├── fetch.js                            // 获取数据
 │   │   ├── filter.js                           // 常用vue过滤器
 │   │   ├── mUtils.js                           // 常用的js方法
-│   │   ├── rem.js                              // px转换rem
 │   │   └── store.js                            // vuex配置
 │   ├── images                                  // 公共图片
 │   ├── page

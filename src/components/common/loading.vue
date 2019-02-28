@@ -8,9 +8,9 @@
   </div>
 </template>
 <script>
-import Spinner from './spinner/index.vue'
+import Spinner from "./spinner/index.vue";
 export default {
-	components: {
+  components: {
     Spinner
   },
   props: {
@@ -18,54 +18,56 @@ export default {
       type: Boolean,
       default: false
     },
-    text: String,
+    text: String
   },
-  created () {
-    this.show = this.value
+  created() {
+    this.show = this.value;
   },
-  data () {
+  data() {
     return {
       show: false
-    }
+    };
   },
   watch: {
-    value (val) {
-      this.show = val
+    value(val) {
+      this.show = val;
     },
-    show (val) {
-      this.$emit('input', val)
+    show(val) {
+      this.$emit("input", val);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import 'src/style/mixin';
+@import "src/style/mixin";
 .loading_box .loading_mask {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	/*background: rgba(0,0,0,0.5);*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*background: rgba(0,0,0,0.5);*/
+  z-index: 5000;
 }
 .loading_box .loading_toast {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	width: 110px;
-	height: 110px;
-	transform: translateX(-50%) translateY(-50%);
-	border-radius: 5px;
-	background: rgba(0,0,0,0.8);
-	text-align: center;
-	padding-top: 25px;
-	box-sizing: border-box;
-	font-size: 18px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 110px;
+  height: 110px;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding-top: 25px;
+  box-sizing: border-box;
+  font-size: 18px;
+  z-index: 5001;
 }
-.loading_box .loading_toast	.loading_content {
-	color: #FFF;
-	margin-top: 15px;
+.loading_box .loading_toast .loading_content {
+  color: #fff;
+  margin-top: 15px;
   font-size: 16px;
 }
 </style>
