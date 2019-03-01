@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import "./mixin";
+
 body,
 div,
 span,
@@ -29,8 +30,7 @@ button,
 input,
 select,
 figure,
-figcaption,
-{
+figcaption {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -43,6 +43,7 @@ figcaption,
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
+
   &:hover {
     outline: none;
   }
@@ -96,88 +97,4 @@ body {
   height: 100%;
   width: 100%;
   background-color: #F5F5F5;
-}
-
-.clear:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.clear {
-  zoom: 1;
-}
-
-.back_img {
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.margin {
-  margin: 0 auto;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.paddingTop {
-  padding-top: 1.95rem;
-}
-
-@keyframes backOpacity {
-  0% {
-    opacity: 1
-  }
-  25% {
-    opacity: .5
-  }
-  50% {
-    opacity: 1
-  }
-  75% {
-    opacity: .5
-  }
-  100% {
-    opacity: 1
-  }
-}
-
-.animation_opactiy {
-  animation: backOpacity 2s ease-in-out infinite;
-}
-
-.ripple {
-  position: relative;
-  overflow: hidden;
-  outline: none;
-  cursor: pointer;
-}
-
-.rippleSpan {
-  display: block;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.4); // box-shadow: inset 0 0 100px 10px rgba(255, 255, 255, 0.8); // , 0 0 20px 0px rgba(255, 255, 255, 0.8)
-  border-radius: 100%;
 }

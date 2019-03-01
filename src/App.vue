@@ -1,48 +1,43 @@
 <template>
   <div id="app">
-    <head-top></head-top>
+    <z-header></z-header>
     <router-view class="router-view"></router-view>
-    <foot-guide></foot-guide>
-    <loading :value="pageLoading || dataLoading"></loading>
+    <z-footer></z-footer>
+    <loading v-model="loading"></loading>
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
-import headTop from '@/components/header/head'
-import footGuide from '@/components/footer/footGuide'
-import loading from '@/components/common/loading'
+import { mapState, mapMutations } from "vuex";
+//头部
+import zHeader from "@/components/header";
+// 尾部
+import zFooter from "@/components/footer";
+//加载动画
+import loading from "@/components/common/loading";
 export default {
-  components:{
-    headTop,
-    footGuide,
+  components: {
+    zHeader,
+    zFooter,
     loading
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   },
-  computed:{
-    ...mapState([
-      'pageLoading',
-      'dataLoading',
-      'path',
-    ])
+  computed: {
+    ...mapState(["loading"])
   },
-  created(){
+  created() {
     this.setCacheData();
   },
-  methods:{
-    ...mapMutations([
-      'setCacheData'
-    ])
+  methods: {
+    ...mapMutations(["setCacheData"])
   },
-  mounted(){
-
-  }
-}
+  mounted() {}
+};
 </script>
 <style lang="scss">
-@import 'src/style/common';
+@import "src/style/common";
+@import "src/style/common";
+@import "src/style/icon";
 </style>
 

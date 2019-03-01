@@ -10,14 +10,8 @@ import store from '@/config/store'
 //常用过滤器
 import filter from '@/config/filter'
 Vue.use(filter);
-//头部
-import headTop from '@/components/header/head';
-//涟漪动画效果
-import {
-  ripple
-} from '@/plugins/mixin';
-Vue.config.productionTip = false
 
+Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -28,4 +22,3 @@ new Vue({
     App
   }
 })
-Vue.mixin(ripple);

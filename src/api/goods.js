@@ -1,12 +1,9 @@
-import {async} from '@/config/fetch';
+import ajax from '@/config/ajax';
 
 
 
 export default {
-  simulation:(val) => async('/simulation',{
-      val
-    },'GET',{
-      load:false
-    }
-  ),
+  simulation: (val) => ajax('/simulation', {
+    val
+  }),
 }

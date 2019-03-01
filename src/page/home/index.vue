@@ -3,9 +3,7 @@
     <!-- 轮播图 -->
     <swiper class="mod-banner-scroll" :options="swiperOption">
       <swiper-slide v-for="(item,index) of colorList" :key="index">
-        <div :style="`backgroundColor:${item}`">
-          {{item}}{{index}}
-        </div>
+        <div :style="`backgroundColor:${item}`">{{item}}{{index}}</div>
       </swiper-slide>
       <!-- 如果需要导航按钮 -->
       <div class="swiper-button-prev" slot="button-prev"></div>
@@ -13,7 +11,13 @@
       <!-- 如果需要分页器 -->
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <button class="ssss" v-ripple></button>
+    <div class="imgBox">
+      <img
+        v-img
+        src="http://qn.zhenwang.so/file/upload/201903/01/4acc1a1f32b243a98147c1993c7da702"
+        alt
+      >
+    </div>
   </div>
 </template>
 <script>
@@ -60,5 +64,8 @@ export default {
   width: 30%;
   height: 30vw;
   background-color: rgb(1, 56, 128);
+}
+.imgBox {
+  @include ic(100px, 100px);
 }
 </style>

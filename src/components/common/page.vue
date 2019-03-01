@@ -2,7 +2,13 @@
   <div class="page-box page-center">
     <div class="page-content">
       <div class="page-btn" :class="{'none': currentIndex == 1}" @click="previous">上一页</div>
-      <div class="page-btn" :class="{'act':currentIndex == item,'more':item == '...'}" @click="current(item)" v-for="(item,index) of pageList">{{item}}</div>
+      <div
+        class="page-btn"
+        :class="{'act':currentIndex == item,'more':item == '...'}"
+        @click="current(item)"
+        v-for="(item,index) of pageList"
+        :key="index"
+      >{{item}}</div>
       <div class="page-btn" :class="{'none': total == currentIndex}" @click="next">下一页</div>
     </div>
   </div>

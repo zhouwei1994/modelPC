@@ -5,43 +5,43 @@ import {
   getStore,
   removeStore,
   modifyJson
-} from '@/config/mUtils'
+}
+from '@/utils/utils'
 Vue.use(Vuex)
 //全局变量
 const state = {
-  //页面加载时
-  pageLoading: false,
-  //数据加载时
-  dataLoading: false,
-  //当前页面路径
-  path: '',
+  //加载时动画
+  loading: 0,
   //用户信息
   userInfo: {},
 }
 //缓存浏览器的数据名称
-const cacheNameList = [];
+const cacheNameList = ["userInfo"];
 //数据处理
 const mutations = { //触发状态
   //取出缓存数据
   setCacheData(state) {
     for (var item of cacheNameList) {
-      let getData = sessionStorage.getItem(item);
-      if (getData) {
-        state[item] = JSON.parse(getData);
+      var data = sessionStorage.getItem(name) || localStorage.getItem(name);
+      if (data) {
+        var dataObj = JSON.parse(data);
+        if (/userInfo/.test(name)) {
+          if (new Date().getTime() - dataObj.time < 86400000) {
+            state[name] = dataObj.data;
+          }
+        } else {
+          state[name] = dataObj;
+        }
       }
     }
   },
-  //页面加载时
-  setPageLoading(state, payload) {
-    state.pageLoading = payload;
-  },
-  //数据加载时
-  setDataLoading(state, payload) {
-    state.dataLoading = payload;
-  },
-  //当前页面路径
-  setPath(state, payload) {
-    state.path = payload;
+  //加载时动画
+  setLoading(state, payload) {
+    if (payload) {
+      state.loading = state.loading + 1;
+    } else {
+      state.loading = state.loading - 1;
+    }
   },
   //储存用户信息
   setUserInfo(state, payload) {

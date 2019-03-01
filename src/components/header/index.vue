@@ -1,7 +1,5 @@
 <template>
-  <header id='headBox'>
-    头部
-  </header>
+  <header id="headBox">头部</header>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
