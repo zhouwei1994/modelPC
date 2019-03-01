@@ -1,74 +1,61 @@
 # website
 
-> A Vue.js project
+> 一个Vue.js项目
 
 ## Build Setup
 
 ``` bash
-# install dependencies
-npm install  //安装node运行环境
+# 用Git从Github上拉取项目
+git clone https://github.com/zhouwei1994/template
 
-# serve with hot reload at localhost:8080
-npm run dev  //启动开发环境服务器
+# 进入template
+cd template
 
-# build for production with minification
-npm run build  //打包生成命令
+# 安装项目依赖项
+npm install
 
-# build for production and view the bundle analyzer report
+# 启动服务器，在localhost：8080进行加载
+npm run dev
+
+# 打包生产环境
+npm run build
+
+# 构建用于生产并查看捆绑分析器报告
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-
 # 项目布局
 
-```
-.
+``` bash
 ├── build                                       // webpack配置文件
 ├── config                                      // 项目打包路径
 ├── src                                         // 源码目录
 │   ├── components                              // 组件
 │   │   ├── common                              // 公共组件
-│   │   │   ├── alertTip.vue                    // 弹出框组件
-│   │   │   ├── loading.vue                     // 页面初始化加载数据的动画组件
-│   │   ├── footer
-│   │   │   └── footGuide.vue                   // 底部公共组件
-│   │   └── header
-│   │       └── head.vue                        // 头部公共组件
+│   │   ├── footer                              // 底部公共组件
+│   │   └── header                              // 头部公共组件
 │   ├── config                                  // 基本配置
 │   │   ├── env.js                              // 环境切换配置
-│   │   ├── fetch.js                            // 获取数据
+│   │   ├── ajax.js                             // 获取数据
 │   │   ├── filter.js                           // 常用vue过滤器
-│   │   ├── mUtils.js                           // 常用的js方法
 │   │   └── store.js                            // vuex配置
 │   ├── images                                  // 公共图片
-│   ├── page
-│   │   ├──
-│   │   │   ├──                      //
-│   │   │   └──
-│   │   │       └──                   //
-│   ├── plugins                                 // 引用的插件
+│   ├── page                                    // 项目页面
 │   ├── router
-│   │   └── router.js                           // 路由配置
-│   ├── service                                 // 数据交互统一调配
-│   │   ├──                           //
-│   │   └──                             //
-│   ├── store                                   // vuex的状态管理
-│   │   ├── action.js                           // 配置actions
-│   │   ├── getters.js                          // 配置getters
-│   │   ├── index.js                            // 引用vuex，创建store
-│   │   ├── modules                             // store模块
-│   │   ├── mutation-types.js                   // 定义常量muations名
-│   │   └── mutations.js                        // 配置mutations
+│   │   └── index.js                            // 路由配置
 │   ├── style
 │   │   ├── common.scss                         // 公共样式文件
 │   │   ├── mixin.scss                          // 样式配置文件
+│   │   └── icon.scss                           // 字体图标文件
 │   ├── App.vue                                 // 页面入口文件
+│   ├── utils                                   // 常用工具
+│   │   ├── base64.js                           // base64转码工具
+│   │   ├── request.js                          // 数据请求方法
+│   │   └── utils.js                            // 常用小工具
+│   ├── App.vue                                 // 项目主界面
 │   ├── main.js                                 // 程序入口文件，加载各种公共组件
 ├── favicon.ico                                 // 图标
 ├── index.html                                  // 入口html文件
-.
-
-56 directories, 203 files
+├── package.json                                // npm入口文件
+└── dev.bat                                  // 入口html文件
 ```
