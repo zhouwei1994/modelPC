@@ -6,15 +6,15 @@
 
 ``` bash
 # 用Git从Github上拉取项目
-git clone https://github.com/zhouwei1994/template
+git clone https://github.com/zhouwei1994/modelPC
 
-# 进入template
-cd template
+# 进入modelPC
+cd modelPC
 
 # 安装项目依赖项
 npm install
 
-# 启动服务器，在localhost：8080进行加载
+# 启动服务器，在localhost:8080进行加载
 npm run dev
 
 # 打包生产环境
