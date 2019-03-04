@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="indexPage">
     <!-- 轮播图 -->
     <swiper class="mod-banner-scroll" :options="swiperOption">
       <swiper-slide v-for="(item,index) of colorList" :key="index">
@@ -31,11 +31,11 @@ export default {
     return {
       colorList: ["red", "yellow", "gray", "pink"],
       swiperOption: {
-        autoplay: 3200,
+        autoplay: 4000,
         setWrapperSize: true,
         observeParents: true,
         loop: true,
-        speed: 1000,
+        speed: 600,
         //设置分页
         pagination: ".swiper-pagination",
         //设置分页点击
@@ -47,11 +47,11 @@ export default {
       }
     };
   },
-  methods: {}
+  methods: {},
+  created() {}
 };
 </script>
 <style lang="scss" scoped>
-@import "src/style/mixin";
 @import "../../../node_modules/swiper/dist/css/swiper.min.css";
 .swiper-container {
   width: 600;
@@ -60,10 +60,8 @@ export default {
     height: 300px;
   }
 }
-.ssss {
-  width: 30%;
-  height: 30vw;
-  background-color: rgb(1, 56, 128);
+.indexPage {
+  background: $mainColor;
 }
 .imgBox {
   @include ic(100px, 100px);

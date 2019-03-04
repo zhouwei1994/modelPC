@@ -2,11 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {
   setStore,
-  getStore,
-  removeStore,
   modifyJson
 }
-from '@/utils/utils'
+from './../utils/utils'
 Vue.use(Vuex)
 //全局变量
 const state = {
@@ -21,7 +19,7 @@ const cacheNameList = ["userInfo"];
 const mutations = { //触发状态
   //取出缓存数据
   setCacheData(state) {
-    for (var item of cacheNameList) {
+    for (let name of cacheNameList) {
       var data = sessionStorage.getItem(name) || localStorage.getItem(name);
       if (data) {
         var dataObj = JSON.parse(data);

@@ -9,11 +9,11 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 //头部
-import zHeader from "@/components/header";
+import zHeader from "./components/header";
 // 尾部
-import zFooter from "@/components/footer";
+import zFooter from "./components/footer";
 //加载动画
-import loading from "@/components/common/loading";
+import loading from "./components/common/loading";
 export default {
   components: {
     zHeader,
@@ -36,7 +36,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "src/style/common";
+@import "src/style/init";
 @import "src/style/common";
 @import "src/style/icon";
 </style>

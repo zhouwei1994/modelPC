@@ -71,7 +71,7 @@ export const prompt = function (text, time) {
     return false;
   }
   repeat = text;
-  var time = time || 3000;
+  time = time || 3000;
   var htm = document.createElement('div');
   htm.innerHTML = text;
   htm.setAttribute('class', "prompt");
@@ -88,7 +88,6 @@ export const prompt = function (text, time) {
       document.body.removeChild(htm);
     }, 600)
   }
-  router.push("/my");
 }
 /**
  * 确认框/询问框
@@ -187,7 +186,6 @@ export const clickDateDiff = function (value) {
   var minute = 1000 * 60;
   var hour = minute * 60;
   var day = hour * 24;
-  var halfamonth = day * 15;
   var month = day * 30;
   var now = new Date().getTime();
   var diffValue = parseInt(now) - parseInt(value);

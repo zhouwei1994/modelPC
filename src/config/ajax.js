@@ -1,14 +1,14 @@
-import store from '@/config/store'
-import router from '@/router/index';
+import store from './store'
+import router from './../router/index';
 import {
   baseUrl
-} from '@/config/env'
+} from './env'
 import {
   prompt,
   $alert,
-} from '@/utils/utils'
+} from './../utils/utils'
 //引入请求方法
-import request from "@/utils/request";
+import request from "./../utils/request";
 //创建request对象
 var http = new request({
   //定义请求地址公共部分(必填)
@@ -22,7 +22,7 @@ var http = new request({
 });
 //请求开始回调
 http.requestStart = function (options) {
-  console.log("请求开始");
+  // console.log("请求开始");
   //判断当前接口是否需要加载动画
   if (options.load) {
     //打开加载动画
@@ -40,7 +40,7 @@ http.requestEnd = function (options, resolve) {
 }
 //所有接口数据处理（这里是我们公司的java后台的数据结构，使用的小伙伴各自按照实际情况处理）
 http.dataFactory = function (options, resolve) {
-  console.log("所有接口数据处理");
+  // console.log("所有接口数据处理");
   //设置回调默认值
   var callback = {
     success: false,

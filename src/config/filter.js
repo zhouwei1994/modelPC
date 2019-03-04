@@ -1,5 +1,4 @@
-import store from '@/config/store';
-import $ajax from '@/config/ajax';
+import $ajax from './ajax.js';
 import {
   prompt,
   $alert,
@@ -7,7 +6,7 @@ import {
   formatTime,
   img
 }
-from '@/utils/utils';
+from './../utils/utils.js';
 export default {
   install(Vue) {
     /**
@@ -24,7 +23,7 @@ export default {
      * 时间转换为XX前
      */
     Vue.filter("getDateDiff", function (value) {
-      return Vue.prototype.clickDateDiff(value);
+      return clickDateDiff(value);
     });
     /**
      * 金额保留两位

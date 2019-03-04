@@ -2,16 +2,14 @@
   <footer id="foot_guide">尾部</footer>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+// import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {};
   },
   created() {},
   mounted() {},
-  computed: {
-    ...mapState(["geohash"])
-  },
+  computed: {},
   methods: {
     gotoAddress(path) {
       this.$router.push(path);
