@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 import {
   routerMode
-} from './../config/env'
-import store from './../config/store'
-Vue.use(Router)
+} from './../config/constPool';
+import store from './../config/store';
+Vue.use(Router);
 //路由配置
 const routes = [{
   path: '/',

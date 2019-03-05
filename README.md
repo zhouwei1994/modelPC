@@ -40,7 +40,7 @@ npm run lint
 │   │   ├── footer                              // 底部组件
 │   │   └── header                              // 头部公共组件
 │   ├── config                                  // 基本配置
-│   │   ├── env.js                              // 环境切换配置
+│   │   ├── constPool.js                        // 环境切换配置
 │   │   ├── ajax.js                             // 获取数据
 │   │   ├── filter.js                           // 常用vue过滤器
 │   │   └── store.js                            // vuex配置

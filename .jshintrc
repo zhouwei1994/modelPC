@@ -14,5 +14,5 @@
   "undef": true,
   "browser": true,
   "unused": true,
-  "esversion": 6
+  "esversion": 9
 }
