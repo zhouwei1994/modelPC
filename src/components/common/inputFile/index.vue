@@ -1,5 +1,5 @@
 <template>
-  <input type="file" @change="uploadFile($event)" :multiple="multiple"/>
+  <input type="file" @change="uploadFile($event)" :multiple="length > 1">
 </template>
 <script>
 import qiniuUpload from "./qiniu.js";
@@ -10,18 +10,18 @@ export default {
     };
   },
   props: {
+    //当前值
     value: {
-      default: []
+      default: ""
     },
-    multiple: {
+    //上传数量
+    length: {
+      default: 1
+    },
+    //是否获取图片高宽
+    wh: {
       type: Boolean,
       default: false
-    },
-    length: {
-      default: 10
-    },
-    type: {
-      default: "Array"
     }
   },
   created() {
@@ -39,25 +39,16 @@ export default {
   methods: {
     uploadFile(event) {
       const _this = this;
-      if (!(_this.fileUrl instanceof Array)) {
-        _this.fileUrl = new Array();
-      }
       //文件数据体
       var files = event.target.files;
-      qiniuUpload(files).then(res => {
-        console.log("图片上传完成", res);
-        if (_this.fileUrl.length >= _this.length) {
-          _this.fileUrl.splice(0, 1);
-        }
-        _this.fileUrl.push(res);
-        console.log(_this.fileUrl);
-        if (_this.type == "Array") {
-          _this.$emit("input", _this.fileUrl);
-          _this.$emit("change", _this.fileUrl[0]);
+      qiniuUpload(files, this.wh, this.length).then(res => {
+        if (_this.length > 1) {
+          _this.fileUrl = _this.fileUrl.concat(res);
         } else {
-          _this.$emit("input", _this.fileUrl[0]);
-          _this.$emit("change", _this.fileUrl[0]);
+          _this.fileUrl = res[0];
         }
+        _this.$emit("input", _this.fileUrl);
+        console.log(_this.fileUrl);
       });
     }
   },

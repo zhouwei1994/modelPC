@@ -1,8 +1,6 @@
 import * as qiniu from "qiniu-js";
-import {
-  qn_upload_api
-} from "@/api/common";
-export default function (files) {
+import $ajax from "@/config/ajax";
+export default function (files, wh, length) {
   //文件名称随机数
   var randomChar = function (l, url = "") {
     const x = "0123456789qwertyuioplkjhgfdsazxcvbnm";
@@ -12,12 +10,7 @@ export default function (files) {
       tmp += x.charAt(Math.ceil(Math.random() * 100000000) % x.length);
     }
     return (
-      "file/upload/" +
-      time.getFullYear() +
-      time.getMonth() +
-      "/" +
-      time.getDate() +
-      "/" +
+      "file/" +
       url +
       time.getTime() +
       tmp
@@ -25,20 +18,30 @@ export default function (files) {
   };
   //获取token
   var getToken = function (callback) {
-    qn_upload_api().then(data => {
-      if (data.success) {
-        callback(data.data);
-      } else {
-        this.prompt(data.info);
-      }
+    $ajax.get("api/open/v1/qn_upload").then(data => {
+      callback(data);
     });
   }
-  const _this = this;
+
+  function getWidthHeight(file, callback) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      let images = new Image();
+      images.src = e.target.result;
+      images.onload = function () {
+        callback(images.width, images.height);
+      }
+    }
+
+  }
+  // const _this = this;
   //文件数据体长度
-  var len = files.length;
+  var len = length == 0 || files.length < length ? files.length : length;
+  //图片地址
+  var imgs = new Array;
   //token
   var token = "";
-  //上传文件夹
   var folderPath = "";
   //访问前缀
   var visitPrefix = "";
@@ -69,16 +72,38 @@ export default function (files) {
       visitPrefix = red.visitPrefix;
       recursive(0);
     });
+
     //递归上传图片
     function recursive(i) {
+      //上传状态
+      var uploadState = true;
+      var imgData = {};
       //文件上传配置
       var observable = qiniu.upload(
         files[i],
-        randomChar(8),
+        randomChar(8, folderPath),
         token,
         putExtra,
         config
       );
+      if (wh) {
+        uploadState = false;
+        getWidthHeight(files[i], (width, height) => {
+          imgData.width = width;
+          imgData.height = height;
+          if (uploadState) {
+            imgs.push(imgData);
+            //图片上传完成
+            if (i < len - 1) {
+              recursive(i + 1);
+            } else {
+              resolve(imgs, true);
+            }
+          } else {
+            uploadState = true;
+          }
+        });
+      }
       //文件开始上传
       var subscription = observable.subscribe(
         res => {
@@ -91,12 +116,27 @@ export default function (files) {
           reject(err);
         },
         res => {
-          resolve(visitPrefix + "/" + res.key, true);
-          //图片上传完成
-          if (i < len - 1) {
-            recursive(i++);
+          if (wh) {
+            imgData.url = visitPrefix + "/" + res.key;
+            if (uploadState) {
+              imgs.push(imgData);
+              //图片上传完成
+              if (i < len - 1) {
+                recursive(i + 1);
+              } else {
+                resolve(imgs, true);
+              }
+            } else {
+              uploadState = true;
+            }
           } else {
-            // event.target.value = "";
+            imgs.push(visitPrefix + "/" + res.key);
+            //图片上传完成
+            if (i < len - 1) {
+              recursive(i + 1);
+            } else {
+              resolve(imgs, true);
+            }
           }
         }
       );
