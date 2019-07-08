@@ -10,6 +10,8 @@ import filter from './config/filter';
 Vue.use(filter);
 
 Vue.config.productionTip = false;
+import zImage from '@/components/common/image.vue';
+Vue.component("z-image", zImage);
 new Vue({
   router,
   store,

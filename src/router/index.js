@@ -2,14 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import {
   routerMode
-} from './../config/constPool';
+} from './../config/baseUrl';
 import store from './../config/store';
 Vue.use(Router);
 //路由配置
 const routes = [{
   path: '/',
   name: 'index',
-  component: resolve => require(['./../page/home/index.vue'], resolve)
+  component: resolve => require(['./../pages/home/index.vue'], resolve)
 }];
 let router = new Router({
   //模式

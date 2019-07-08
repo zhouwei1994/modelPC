@@ -15,7 +15,6 @@ if (process.env.NODE_ENV === 'development') {
   //路由模式
   routerMode = 'history';
 }
-
 /****************常量配置****************/
 //手机号验证正则表达式
 const phoneRegular = /^1\d{10}$/;

@@ -6,6 +6,13 @@ export default class request {
     this.timeout = options.timeout || 0;
     //默认请求头
     this.headers = options.headers || {};
+    //默认配置
+    //是否提示--默认提示
+    this.isPrompt = true;
+    //是否显示请求动画
+    this.load = true;
+    //是否使用处理数据模板
+    this.isFactory = true;
   }
   //post请求
   post(url = '', data = {}, options = {}) {
@@ -54,18 +61,16 @@ export default class request {
   getDefault(url, options) {
     //判断url是不是链接
     var urlType = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~/])+$/.test(url);
-    return {
-      //请求地址
-      httpUrl: urlType ? url : this.baseUrl + url,
-      //是否提示--默认提示
-      isPrompt: options.prompt === false ? false : true,
-      //是否显示请求动画
-      load: options.load === false ? false : true,
-      //请求头
-      headers: Object.assign(this.headers, options.headers),
-      //是否处理数据
-      isFactory: options.isFactory === false ? false : true
-    }
+    let config = Object.assign({
+      isPrompt: this.isPrompt,
+      load: this.load,
+      isFactory: this.isFactory
+    }, options);
+    //请求地址
+    config.httpUrl = urlType ? url : this.baseUrl + url;
+    //请求头
+    config.headers = Object.assign(this.headers, options.headers);
+    return config;
   }
   //请求方法
   getRequest(ajaxType, options, data, callback) {
@@ -74,7 +79,18 @@ export default class request {
       requestObj = new XMLHttpRequest();
     }
     //请求前回调
-    this.requestStart && this.requestStart(options);
+    if (this.requestStart) {
+      options.method = ajaxType;
+      options.data = data;
+      var requestStart = this.requestStart(options);
+      if (typeof requestStart == "object") {
+        options.data = requestStart.data;
+        options.headers = requestStart.headers;
+        options.isPrompt = requestStart.isPrompt;
+        options.load = requestStart.load;
+        options.isFactory = requestStart.isFactory;
+      }
+    }
     //设置请求时间，最低5秒
     if (options.timeout > 2000) {
       //设置xhr请求的超时时间
@@ -87,7 +103,7 @@ export default class request {
         requestObj.setRequestHeader(key, options.headers[key]);
       }
     });
-    requestObj.send(data);
+    requestObj.send(options.data);
     requestObj.onreadystatechange = () => {
       if (requestObj.readyState == 4) {
         //请求完成回调
@@ -99,7 +115,7 @@ export default class request {
           }
           callback(true, result);
         } else {
-          // console.error(requestObj.response);
+          console.error(requestObj.response);
           callback(false, requestObj.response);
         }
       }

@@ -31,19 +31,28 @@ export default {
     return {
       colorList: ["red", "yellow", "gray", "pink"],
       swiperOption: {
-        autoplay: 4000,
-        setWrapperSize: true,
-        observeParents: true,
-        loop: true,
+        //自由轮播
+        autoplay: {
+          disableOnInteraction: false,
+          delay: 3000
+        },
+        //阻止冒泡
+        preventLinksPropagation: false,
+        // 划过的时间
         speed: 600,
+        // 滑动衔接
+        loop: false,
+        //手指
+        grabCursor: true,
+        //flex布局
+        setWrapperSize: true,
+        //提前初始化
+        notNextTick: true,
         //设置分页
         pagination: ".swiper-pagination",
-        //设置分页点击
-        paginationClickable: true,
         //设置上一页，下一页
         prevButton: ".swiper-button-prev",
         nextButton: ".swiper-button-next",
-        autoplayDisableOnInteraction: false
       }
     };
   },
