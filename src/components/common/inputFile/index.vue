@@ -1,5 +1,5 @@
 <template>
-  <input type="file" @change="uploadFile($event)" :multiple="length > 1">
+  <input type="file" @change="uploadFile($event)" :multiple="length > 1" :accept="accept" />
 </template>
 <script>
 import qiniuUpload from "./qiniu.js";
@@ -18,10 +18,19 @@ export default {
     length: {
       default: 1
     },
-    //是否获取图片高宽
-    wh: {
+    //获取文件其他信息
+    otherData: {
       type: Boolean,
-      default: false
+      default: function() {
+        return false
+      }
+    },
+    //文件类型
+    accept: {
+      type: String,
+      default: function() {
+        return "image/gif,image/jp2,image/jpeg,image/png";
+      }
     }
   },
   created() {
@@ -41,14 +50,13 @@ export default {
       const _this = this;
       //文件数据体
       var files = event.target.files;
-      qiniuUpload(files, this.wh, this.length).then(res => {
+      qiniuUpload(files, this).then(res => {
         if (_this.length > 1) {
           _this.fileUrl = _this.fileUrl.concat(res);
         } else {
           _this.fileUrl = res[0];
         }
         _this.$emit("input", _this.fileUrl);
-        console.log(_this.fileUrl);
       });
     }
   },

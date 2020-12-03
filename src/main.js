@@ -1,19 +1,14 @@
-import Vue from 'vue';
-//主组件
-import App from './App.vue';
-//vue路由
-import router from './router';
-//vuex配置文件
-import store from './config/store';
-//常用过滤器
-import filter from './config/filter';
-Vue.use(filter);
-
-Vue.config.productionTip = false;
-import zImage from '@/components/common/image.vue';
-Vue.component("z-image", zImage);
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import "@/plugins/filter";
+import zHeader from "@/components/header";
+import zFooter from "@/components/footer";
+let application = createApp(App);
+application.use(store);
+application.use(router);
+// 注册全局组件
+application.component('z-header', zHeader);
+application.component('z-footer', zFooter);
+application.mount('#app');

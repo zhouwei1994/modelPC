@@ -3,31 +3,42 @@
 </template>
 
 <script>
-import SpinnerJs from './spinner'
-const types = ['android', 'ios', 'ios-small', 'bubbles', 'circles', 'crescent', 'dots', 'lines', 'ripple', 'spiral']
+import SpinnerJs from "./spinner";
+const types = [
+  "android",
+  "ios",
+  "ios-small",
+  "bubbles",
+  "circles",
+  "crescent",
+  "dots",
+  "lines",
+  "ripple",
+  "spiral"
+];
 
 export default {
-  mounted () {
-    this.$nextTick(() => {
-      SpinnerJs(this.$el, this.type)
-    })
-  },
   props: {
     type: {
       type: String,
-      default: 'ios'
+      default: "ios"
     }
   },
   computed: {
-    className () {
-      let rs = {}
+    className() {
+      const rs = {};
       for (let i = 0; i < types.length; i++) {
-        rs[`vux-spinner-${types[i]}`] = this.type === types[i]
+        rs[`vux-spinner-${types[i]}`] = this.type === types[i];
       }
-      return rs
+      return rs;
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      SpinnerJs(this.$el, this.type);
+    });
   }
-}
+};
 </script>
 
 <style>
@@ -54,7 +65,8 @@ export default {
   stroke: #4b8bf4;
 }
 
-.vux-spinner-ios, .vux-spinner-ios-small {
+.vux-spinner-ios,
+.vux-spinner-ios-small {
   stroke: #69717d;
 }
 

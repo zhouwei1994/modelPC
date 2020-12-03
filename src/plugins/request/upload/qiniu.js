@@ -1,6 +1,6 @@
 import * as qiniu from "qiniu-js";
-import $axios from "axios";
-export default function (files, _this) {
+import $ajax from "@/config/ajax";
+export default function (files, wh, length) {
   //文件名称随机数
   var randomChar = function (l, url = "") {
     const x = "0123456789qwertyuioplkjhgfdsazxcvbnm";
@@ -18,7 +18,7 @@ export default function (files, _this) {
   };
   //获取token
   var getToken = function (callback) {
-    _this.$axios.get("api/kemean/aid/qn_upload").then(data => {
+    $ajax.get("api/open/v1/qn_upload").then(data => {
       callback(data);
     });
   }
@@ -37,7 +37,7 @@ export default function (files, _this) {
   }
   // const _this = this;
   //文件数据体长度
-  var len = files.length < parseInt(_this.length) ? files.length : parseInt(_this.length);
+  var len = length == 0 || files.length < length ? files.length : length;
   //图片地址
   var imgs = new Array;
   //token
@@ -86,7 +86,7 @@ export default function (files, _this) {
         putExtra,
         config
       );
-      if (_this.otherData && files[i].type.indexOf("image/") > -1) {
+      if (wh) {
         uploadState = false;
         getWidthHeight(files[i], (width, height) => {
           imgData.width = width;
@@ -103,8 +103,6 @@ export default function (files, _this) {
             uploadState = true;
           }
         });
-      } else {
-        uploadState = true;
       }
       //文件开始上传
       var subscription = observable.subscribe(
@@ -118,23 +116,27 @@ export default function (files, _this) {
           reject(err);
         },
         res => {
-          if (_this.otherData) {
+          if (wh) {
             imgData.url = visitPrefix + "/" + res.key;
-            imgData.name = files[i].name;
+            if (uploadState) {
+              imgs.push(imgData);
+              //图片上传完成
+              if (i < len - 1) {
+                recursive(i + 1);
+              } else {
+                resolve(imgs, true);
+              }
+            } else {
+              uploadState = true;
+            }
           } else {
-            imgData = visitPrefix + "/" + res.key;
-          }
-          if (uploadState) {
-            //图片上传完成
-            imgs.push(imgData);
+            imgs.push(visitPrefix + "/" + res.key);
             //图片上传完成
             if (i < len - 1) {
               recursive(i + 1);
             } else {
               resolve(imgs, true);
             }
-          } else {
-            uploadState = true;
           }
         }
       );

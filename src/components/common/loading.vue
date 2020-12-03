@@ -1,30 +1,31 @@
 <template>
-  <div class="loading_box" v-show="value > 0">
+  <div v-show="loading" class="loading_box">
     <div class="loading_mask"></div>
     <div class="loading_toast">
-      <spinner type="android"></spinner>
+      <spinner type="android" />
       <p class="loading_content">{{ text || '加载中' }}</p>
     </div>
   </div>
 </template>
 <script>
 import Spinner from "./spinner/index.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     Spinner
   },
+   computed: {
+    ...mapState(["loading"]),
+  },
   props: {
-    value: {
-      type: Number,
-      default: 0
-    },
+    // eslint-disable-next-line vue/require-default-prop
     text: String
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "src/style/mixin";
+@import "@/style/mixin";
 .loading_box .loading_mask {
   position: fixed;
   top: 0;

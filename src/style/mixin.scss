@@ -1,11 +1,10 @@
 @charset "utf-8";
 //主色
-$mainColor: #006cdb;
+$themeColor: #527fff;
 //辅色
-$viceColor:#999;
-
+$viceColor: #999;
 // 背景图片地址和大小
-@mixin bis($url, $size: "auto 100%") {
+@mixin bis($url, $size: cover) {
   background-image: url($url);
   background-repeat: no-repeat;
   background-position: center center;
@@ -14,27 +13,25 @@ $viceColor:#999;
 
 // 头像
 @mixin ic($width, $height) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  flex-shrink: 0;
+  display: block;
   width: $width;
   height: $height;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 // 单行省略号
 @mixin toe() {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
 }
 
 // 多行省略号
-@mixin bov() {
+@mixin bov($num: 2) {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: $num;
   -webkit-box-orient: vertical;
 }

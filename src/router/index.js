@@ -1,32 +1,25 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import {
-  routerMode
-} from './../config/baseUrl';
-import store from './../config/store';
-Vue.use(Router);
-//路由配置
-const routes = [{
-  path: '/',
-  name: 'index',
-  component: resolve => require(['./../pages/home/index.vue'], resolve)
-}];
-let router = new Router({
-  //模式
-  mode: routerMode,
-  //代码检查
-  // strict: process.env.NODE_ENV !== 'production',
-  routes,
-  "router-link-active": "active",
-  "linkExactActiveClass": "active",
-});
-//页面加载时
-router.beforeEach(function (to, from, next) {
-  store.commit('setLoading', true);
-  next();
-});
-//页面销毁时
-router.afterEach(function () {
-  store.commit('setLoading', false);
-});
-export default router;
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/home.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/login.vue')
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router

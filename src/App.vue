@@ -1,43 +1,31 @@
 <template>
-  <div id="app">
-    <z-header></z-header>
-    <router-view class="router-view"></router-view>
-    <z-footer></z-footer>
-    <loading v-model="loading"></loading>
+  <div>
+    <router-view />
+    <!-- 加载动画 -->
+    <loading v-model="loading" />
   </div>
 </template>
+
 <script>
-import { mapState, mapMutations } from "vuex";
-//头部
-import zHeader from "./components/header";
-// 尾部
-import zFooter from "./components/footer";
-//加载动画
-import loading from "./components/common/loading";
+// 加载动画
+import loading from "@/components/common/loading";
+
 export default {
+  name: 'App',
   components: {
-    zHeader,
-    zFooter,
     loading
   },
-  data() {
-    return {};
+ 
+  created(){ 
+    
   },
-  computed: {
-    ...mapState(["loading"])
+  mounted() {
+    
   },
-  created() {
-    this.setCacheData();
-  },
-  methods: {
-    ...mapMutations(["setCacheData"])
-  },
-  mounted() {}
-};
+}
 </script>
-<style lang="scss">
-@import "src/style/init";
-@import "src/style/common";
-@import "src/style/icon";
-</style>
 
+<style lang="scss">
+@import "@/style/common.scss";
+@import "@/style/reset.scss";
+</style>

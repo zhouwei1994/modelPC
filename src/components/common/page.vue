@@ -10,39 +10,39 @@
 
 <script>
 export default {
+  props: {
+    currentPage: {
+      type: Number,
+      default: 1
+    },
+    // eslint-disable-next-line vue/require-prop-types
+    total: {
+      default: ""
+    },
+    totalPage: {
+      type: Number,
+      default() {
+        return 9;
+      }
+    },
+    last: {
+      type: Boolean,
+      default() {
+        return true;
+      }
+    }
+  },
   data() {
     return {
       currentIndex: 1,
       pageList: []
     };
   },
-  props: {
-    currentPage: {
-      type: Number,
-      default: 1
-    },
-    total: {
-      default: ""
-    },
-    totalPage: {
-      type: Number,
-      default: function() {
-        return 9;
-      }
-    },
-    last: {
-      type: Boolean,
-      default: function() {
-        return true;
-      }
-    }
-  },
   watch: {
-    total(newVal) {
+    total() {
       this.pageData();
     },
     currentPage(newVal) {
-      console.log(123);
       this.currentIndex = newVal;
       this.pageData();
     }
@@ -55,7 +55,8 @@ export default {
   },
   methods: {
     pageData() {
-      let list = new Array();
+      // eslint-disable-next-line no-array-constructor
+      const list = new Array();
       let total = "";
       if (this.last) {
         total = this.total;
@@ -63,7 +64,7 @@ export default {
         total = this.total > this.totalPage ? 10 : this.total;
       }
       if (this.totalPage >= total) {
-        for (var i = 1; i <= total; i++) {
+        for (let i = 1; i <= total; i++) {
           list.push(i);
         }
       } else {
@@ -73,7 +74,7 @@ export default {
         if (start <= 1) {
           start = 1;
           end = this.totalPage;
-          for (var i = start; i <= end; i++) {
+          for (let i = start; i <= end; i++) {
             list.push(i);
           }
           list.push("...");
@@ -85,7 +86,7 @@ export default {
           list.push("...");
           start = this.total - this.totalPage + 1;
           end = this.total;
-          for (var i = start; i <= end; i++) {
+          for (let i = start; i <= end; i++) {
             list.push(i);
           }
         } else {
@@ -93,7 +94,7 @@ export default {
           list.push("...");
           start = start + 1;
           end = end - 1;
-          for (var i = start; i <= end; i++) {
+          for (let i = start; i <= end; i++) {
             list.push(i);
           }
           list.push("...");
@@ -105,24 +106,24 @@ export default {
       this.pageList = list;
     },
     previous() {
-      if (this.currentIndex != 1) {
+      if (this.currentIndex !== 1) {
         this.currentIndex--;
         this.pageData();
-        this.$emit("current-change", this.currentIndex);
+        this.$emit("change", this.currentIndex);
       }
     },
     next() {
       if (this.total > this.currentIndex) {
         this.currentIndex++;
         this.pageData();
-        this.$emit("current-change", this.currentIndex);
+        this.$emit("change", this.currentIndex);
       }
     },
     current(item) {
-      if (item != "..." && item != this.currentIndex) {
+      if (item !== "..." && item !== this.currentIndex) {
         this.currentIndex = item;
         this.pageData();
-        this.$emit("current-change", this.currentIndex);
+        this.$emit("change", this.currentIndex);
       }
     }
   }
@@ -130,41 +131,45 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/mixin";
+@import "@/style/mixin.scss";
+$height:50px;
 .page-box {
   padding: 20px 0 40px 0;
   display: flex;
   justify-content: space-around;
   .page-content {
-    height: 32px;
-    line-height: 32px;
+    height: $height;
+    line-height: $height;
     display: flex;
     .page-btn {
       height: 100%;
-      min-width: 32px;
+      min-width: $height;
       text-align: center;
-      margin: 0 7px;
+      // margin: 0 7px;
       font-size: 14px;
       color: #666;
       cursor: pointer;
-      border-radius: 4px;
+      background-color: #FFF;
       &.none {
         color: #aeaeae;
       }
       &.more {
         border-color: transparent;
         padding: 0;
-        min-width: 32px;
+        min-width: $height;
         background-color: inherit;
       }
       &.act {
-        background-color: #006cdb;
+        background-color:$themeColor;
         color: #fff;
         border-color: #f1f1f1;
         border-width: 2px 0;
       }
+      &:first-child {
+        margin-right: 10px;
+      }
       &:last-child {
-        margin-right: 0;
+        margin-left: 10px;
       }
     }
   }
