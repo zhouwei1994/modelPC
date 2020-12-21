@@ -365,10 +365,8 @@ var calendar = {
       case 20:
         s = '\u4e8c\u5341';
         break;
-        break;
       case 30:
         s = '\u4e09\u5341';
-        break;
         break;
       default:
         s = calendar.nStr2[Math.floor(d / 10)];
@@ -401,16 +399,18 @@ var calendar = {
     } //年份限定、上限
     if (y == 1900 && m == 1 && d < 31) {
       return -1;
-    } //下限
+    }
+    //下限
+    let objDate = void 0;
     if (!y) { //未传参  获得当天
-      var objDate = new Date();
+      objDate = new Date();
     } else {
-      var objDate = new Date(y, parseInt(m) - 1, d)
+      objDate = new Date(y, parseInt(m) - 1, d)
     }
     var i, leap = 0,
       temp = 0;
     //修正ymd参数
-    var y = objDate.getFullYear(),
+    y = objDate.getFullYear(),
       m = objDate.getMonth() + 1,
       d = objDate.getDate();
     var offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000;
@@ -438,7 +438,7 @@ var calendar = {
     //农历年
     var year = i;
 
-    var leap = calendar.leapMonth(i); //闰哪个月
+    leap = calendar.leapMonth(i); //闰哪个月
     var isLeap = false;
 
     //效验闰月
@@ -538,10 +538,8 @@ var calendar = {
    * @eg:console.log(calendar.lunar2solar(1987,9,10));
    */
   lunar2solar: function (y, m, d, isLeapMonth) { //参数区间1900.1.31~2100.12.1
-    var isLeapMonth = !!isLeapMonth;
-    var leapOffset = 0;
+    isLeapMonth = !!isLeapMonth;
     var leapMonth = calendar.leapMonth(y);
-    var leapDay = calendar.leapDays(y);
     if (isLeapMonth && (leapMonth != m)) {
       return -1;
     } //传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
@@ -566,7 +564,7 @@ var calendar = {
     }
     var leap = 0,
       isAdd = false;
-    for (var i = 1; i < m; i++) {
+    for (let i = 1; i < m; i++) {
       leap = calendar.leapMonth(y);
       if (!isAdd) { //处理闰月
         if (leap <= i && leap > 0) {

@@ -1,26 +1,33 @@
 <template>
   <div class="selector" @click.stop>
-    <div>
+    <div @click="selectShow">
       <input
+        class="value"
         type="text"
         v-model="search"
         ref="input"
-        placeholder="请选择"
+        :placeholder="placeholder"
         @focus="selectShow"
         @blur="selectBlur"
-      >
-      <i @click.stop="getFocus"></i>
+      />
+      <!-- <i @click.stop="getFocus"></i> -->
     </div>
     <transition name="fade">
-      <div class="select-dropdown" :class="{'top':direction}" v-if="selectState == 1">
+      <div
+        class="select-dropdown"
+        :class="{ top: direction }"
+        v-if="selectState == 1"
+      >
         <div class="arrow"></div>
         <ul class="selectorBox">
           <p>可首字母查询</p>
           <li
-            v-for="(item,index) of selectList"
+            v-for="(item, index) of selectList"
             :key="index"
             @click="assignment(item)"
-          >{{item.name}}</li>
+          >
+            {{ item.name }}
+          </li>
           <li v-if="selectList.length <= 0">无匹配数据</li>
         </ul>
       </div>
@@ -35,20 +42,30 @@ export default {
       selectList: [],
       selectState: 0,
       direction: false,
-      search: ""
+      search: "",
     };
   },
   props: {
     value: {
-      default: {}
+      default: function () {
+        return {};
+      },
     },
     data: {
       type: Array,
-      default: []
+      default: function () {
+        return [];
+      },
     },
     show: {
-      default: false
-    }
+      default: false,
+    },
+    placeholder: {
+      type: String,
+      default: function () {
+        return "请选择";
+      },
+    },
   },
   created() {
     if (this.value) {
@@ -63,11 +80,10 @@ export default {
         this.search = val.name;
       }
     },
-    data(val) {
+    data() {
       this.getSearch(this.search);
     },
     search(val) {
-      console.log(val);
       if (val == "") {
         this.$emit("input", {});
       } else {
@@ -81,7 +97,7 @@ export default {
     },
     show(val) {
       this.selectState = val;
-    }
+    },
   },
   methods: {
     //显示
@@ -140,10 +156,9 @@ export default {
       setTimeout(() => {
         this.$emit("blur");
       }, 100);
-    }
+    },
   },
   mounted() {
-    const _this = this;
     document.body.onclick = () => {
       this.selectState = false;
       var children = this.$parent.$parent.$children;
@@ -164,50 +179,16 @@ export default {
         }
       }
     };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/mixin";
 .selector {
   width: 100%;
-  height: 36px;
-  line-height: 36px;
   white-space: nowrap;
   position: relative;
   background-color: #fff;
-  > div {
-    border: solid 1px #eeeeee;
-    display: flex;
-    border-radius: 2px;
-    input {
-      width: 100%;
-      border: 0;
-      padding: 0 10px;
-      font-size: 14px;
-      color: #999999;
-    }
-    i {
-      width: 15px;
-      position: relative;
-      flex-shrink: 0;
-      cursor: pointer;
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 0%;
-        width: 0px;
-        height: 0px;
-        border-right: 5px solid transparent;
-        border-left: 5px solid transparent;
-        border-top: 5px solid #999;
-        transition: all 0.6;
-        transform: rotate(0deg);
-      }
-    }
-  }
   .select-dropdown {
     position: absolute;
     left: 0px;
@@ -274,7 +255,7 @@ export default {
         /*滚动条里面小方块*/
         border-radius: 5px;
         -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-        background-color: #3198db;
+        background-color: $themeColor;
       }
       &::-webkit-scrollbar-track {
         /*滚动条里面轨道*/
@@ -289,7 +270,7 @@ export default {
         line-height: initial;
       }
       li {
-        padding: 0 15px;
+        padding: 7px 15px;
         cursor: pointer;
         font-size: 14px;
         color: #333;

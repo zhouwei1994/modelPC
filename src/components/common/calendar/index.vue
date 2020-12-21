@@ -210,58 +210,112 @@
 </style>
 
 <template>
-    <div class="calendar">
-        <div class="calendar-tools">
-            <span class="calendar-prev" @click="prev">
-                <svg width="20" height="20" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g class="transform-group">
-                    <g transform="scale(0.015625, 0.015625)">
-                        <path d="M671.968 912c-12.288 0-24.576-4.672-33.952-14.048L286.048 545.984c-18.752-18.72-18.752-49.12 0-67.872l351.968-352c18.752-18.752 49.12-18.752 67.872 0 18.752 18.72 18.752 49.12 0 67.872l-318.016 318.048 318.016 318.016c18.752 18.752 18.752 49.12 0 67.872C696.544 907.328 684.256 912 671.968 912z" fill="#5e7a88"></path>
-                    </g>
-                </g>
-                </svg>
-            </span>
-            <span class="calendar-next"  @click="next">
-                <svg width="20" height="20" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g class="transform-group">
-                    <g transform="scale(0.015625, 0.015625)">
-                        <path d="M761.056 532.128c0.512-0.992 1.344-1.824 1.792-2.848 8.8-18.304 5.92-40.704-9.664-55.424L399.936 139.744c-19.264-18.208-49.632-17.344-67.872 1.888-18.208 19.264-17.376 49.632 1.888 67.872l316.96 299.84-315.712 304.288c-19.072 18.4-19.648 48.768-1.248 67.872 9.408 9.792 21.984 14.688 34.56 14.688 12 0 24-4.48 33.312-13.44l350.048-337.376c0.672-0.672 0.928-1.6 1.6-2.304 0.512-0.48 1.056-0.832 1.568-1.344C757.76 538.88 759.2 535.392 761.056 532.128z" fill="#5e7a88"></path>
-                    </g>
-                </g>
-                </svg>
-            </span>
-            <div class="calendar-info" @click.stop="changeYear">
-                <!-- {{monthString}} -->
-                <div class="month">
-                    <div class="month-inner" :style="{'top':-(this.month*20)+'px'}">
-                        <span v-for="m in months" :key="m">{{m}}</span>
-                    </div>
-                </div>
-                <div class="year">{{year}}</div>
-            </div>
+  <div class="calendar">
+    <div class="calendar-tools">
+      <span class="calendar-prev" @click="prev">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 16 16"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g class="transform-group">
+            <g transform="scale(0.015625, 0.015625)">
+              <path
+                d="M671.968 912c-12.288 0-24.576-4.672-33.952-14.048L286.048 545.984c-18.752-18.72-18.752-49.12 0-67.872l351.968-352c18.752-18.752 49.12-18.752 67.872 0 18.752 18.72 18.752 49.12 0 67.872l-318.016 318.048 318.016 318.016c18.752 18.752 18.752 49.12 0 67.872C696.544 907.328 684.256 912 671.968 912z"
+                fill="#5e7a88"
+              ></path>
+            </g>
+          </g>
+        </svg>
+      </span>
+      <span class="calendar-next" @click="next">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 16 16"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g class="transform-group">
+            <g transform="scale(0.015625, 0.015625)">
+              <path
+                d="M761.056 532.128c0.512-0.992 1.344-1.824 1.792-2.848 8.8-18.304 5.92-40.704-9.664-55.424L399.936 139.744c-19.264-18.208-49.632-17.344-67.872 1.888-18.208 19.264-17.376 49.632 1.888 67.872l316.96 299.84-315.712 304.288c-19.072 18.4-19.648 48.768-1.248 67.872 9.408 9.792 21.984 14.688 34.56 14.688 12 0 24-4.48 33.312-13.44l350.048-337.376c0.672-0.672 0.928-1.6 1.6-2.304 0.512-0.48 1.056-0.832 1.568-1.344C757.76 538.88 759.2 535.392 761.056 532.128z"
+                fill="#5e7a88"
+              ></path>
+            </g>
+          </g>
+        </svg>
+      </span>
+      <div class="calendar-info" @click.stop="changeYear">
+        <!-- {{monthString}} -->
+        <div class="month">
+          <div class="month-inner" :style="{ top: -(this.month * 20) + 'px' }">
+            <span v-for="m in months" :key="m">{{ m }}</span>
+          </div>
         </div>
-        <table cellpadding="5">
-        <thead>
-            <tr>
-                <td v-for="week in weeks" :key="week" class="week">{{week}}</td>
-            </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(day,k1) in days" :key="k1" style="{'animation-delay',(k1*30)+'ms'}">
-            <td v-for="(child,k2) in day" :key="k2" :class="{'selected':child.selected,'disabled':child.disabled}" @click="select(k1,k2,$event)">
-                <span :class="{'red':k2==0||k2==6||((child.isLunarFestival||child.isGregorianFestival) && lunar)}">{{child.day}}</span>
-                <div class="text" v-if="child.eventName!=undefined">{{child.eventName}}</div>
-                <div class="text" :class="{'isLunarFestival':child.isLunarFestival,'isGregorianFestival':child.isGregorianFestival}" v-if="lunar">{{child.lunar}}</div>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-
-        <div class="calendar-years" :class="{'show':yearsShow}">
-            <span v-for="y in years" :key="y" @click.stop="selectYear(y)" :class="{'active':y==year}">{{y}}</span>
-        </div>
- 
+        <div class="year">{{ year }}</div>
+      </div>
     </div>
+    <table cellpadding="5">
+      <thead>
+        <tr>
+          <td v-for="week in weeks" :key="week" class="week">{{ week }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(day, k1) in days"
+          :key="k1"
+          style="{'animation-delay',(k1*30)+'ms'}"
+        >
+          <td
+            v-for="(child, k2) in day"
+            :key="k2"
+            :class="{ selected: child.selected, disabled: child.disabled }"
+            @click="select(k1, k2, $event)"
+          >
+            <span
+              :class="{
+                red:
+                  k2 == 0 ||
+                  k2 == 6 ||
+                  ((child.isLunarFestival || child.isGregorianFestival) &&
+                    lunar),
+              }"
+              >{{ child.day }}</span
+            >
+            <div class="text" v-if="child.eventName != undefined">
+              {{ child.eventName }}
+            </div>
+            <div
+              class="text"
+              :class="{
+                isLunarFestival: child.isLunarFestival,
+                isGregorianFestival: child.isGregorianFestival,
+              }"
+              v-if="lunar"
+            >
+              {{ child.lunar }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="calendar-years" :class="{ show: yearsShow }">
+      <span
+        v-for="y in years"
+        :key="y"
+        @click.stop="selectYear(y)"
+        :class="{ active: y == year }"
+        >{{ y }}</span
+      >
+    </div>
+  </div>
 </template>
 
 <script>
@@ -271,64 +325,64 @@ export default {
     // 多选模式
     multi: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 范围模式
     range: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 默认日期
     value: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     // 开始选择日期
     begin: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     // 结束选择日期
     end: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     // 是否小于10补零
     zero: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 屏蔽的日期
     disabled: {
       type: Array,
-      default: function() {
+      default: function () {
         return [];
-      }
+      },
     },
     // 是否显示农历
     lunar: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 自定义星期名称
     weeks: {
       type: Array,
-      default: function() {
+      default: function () {
         return window.navigator.language.toLowerCase() == "zh-cn"
           ? ["日", "一", "二", "三", "四", "五", "六"]
           : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      }
+      },
     },
     // 自定义月份
     months: {
       type: Array,
-      default: function() {
+      default: function () {
         return window.navigator.language.toLowerCase() == "zh-cn"
           ? [
               "一月",
@@ -342,7 +396,7 @@ export default {
               "九月",
               "十月",
               "十一月",
-              "十二月"
+              "十二月",
             ]
           : [
               "January",
@@ -356,17 +410,17 @@ export default {
               "September",
               "October",
               "November",
-              "December"
+              "December",
             ];
-      }
+      },
     },
     // 自定义事件
     events: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -391,7 +445,7 @@ export default {
           "10-1": "寒衣节",
           "10-15": "下元节",
           "12-8": "腊八节",
-          "12-23": "祭灶节"
+          "12-23": "祭灶节",
         },
         gregorian: {
           "1-1": "元旦",
@@ -407,11 +461,11 @@ export default {
           "9-10": "教师节",
           "10-1": "国庆节",
           "12-24": "平安夜",
-          "12-25": "圣诞节"
-        }
+          "12-25": "圣诞节",
+        },
       },
       rangeBegin: [],
-      rangeEnd: []
+      rangeEnd: [],
     };
   },
   watch: {
@@ -420,7 +474,7 @@ export default {
     },
     value() {
       this.init();
-    }
+    },
   },
   mounted() {
     this.init();
@@ -546,7 +600,7 @@ export default {
           }
           if (this.disabled.length > 0) {
             if (
-              this.disabled.filter(v => {
+              this.disabled.filter((v) => {
                 return (
                   this.year === v[0] && this.month === v[1] - 1 && i === v[2]
                 );
@@ -561,7 +615,7 @@ export default {
           let options;
           // 判断是否选中
           if (
-            this.value.filter(v => {
+            this.value.filter((v) => {
               return (
                 this.year === v[0] && this.month === v[1] - 1 && i === v[2]
               );
@@ -602,7 +656,7 @@ export default {
             }
             if (this.disabled.length > 0) {
               if (
-                this.disabled.filter(v => {
+                this.disabled.filter((v) => {
                   return (
                     this.year === v[0] && this.month === v[1] - 1 && i === v[2]
                   );
@@ -684,7 +738,7 @@ export default {
             }
             if (this.disabled.length > 0) {
               if (
-                this.disabled.filter(v => {
+                this.disabled.filter((v) => {
                   return (
                     this.year === v[0] && this.month === v[1] - 1 && i === v[2]
                   );
@@ -815,7 +869,7 @@ export default {
       return {
         lunar: lunarValue,
         isLunarFestival: isLunarFestival,
-        isGregorianFestival: isGregorianFestival
+        isGregorianFestival: isGregorianFestival,
       };
     },
     // 获取自定义事件
@@ -838,7 +892,7 @@ export default {
         this.month = parseInt(this.month) - 1;
       }
       this.render(this.year, this.month);
-      this.$emit("selectMonth", this.month + 1, this.year);
+      this.$emit("select-month", this.month + 1, this.year);
       this.$emit("prev", this.month + 1, this.year);
     },
     //  下月
@@ -851,7 +905,7 @@ export default {
         this.month = parseInt(this.month) + 1;
       }
       this.render(this.year, this.month);
-      this.$emit("selectMonth", this.month + 1, this.year);
+      this.$emit("select-month", this.month + 1, this.year);
       this.$emit("next", this.month + 1, this.year);
     },
     // 选中日期
@@ -901,7 +955,7 @@ export default {
         this.render(this.year, this.month);
       } else if (this.multi) {
         // 如果已经选过则过滤掉
-        let filterDay = this.multiDays.filter(v => {
+        let filterDay = this.multiDays.filter((v) => {
           return (
             this.year === v[0] &&
             this.month === v[1] - 1 &&
@@ -909,7 +963,7 @@ export default {
           );
         });
         if (filterDay.length > 0) {
-          this.multiDays = this.multiDays.filter(v => {
+          this.multiDays = this.multiDays.filter((v) => {
             return (
               this.year !== v[0] ||
               this.month !== v[1] - 1 ||
@@ -920,7 +974,7 @@ export default {
           this.multiDays.push([
             this.year,
             this.month + 1,
-            this.days[k1][k2].day
+            this.days[k1][k2].day,
           ]);
         }
         this.days[k1][k2].selected = !this.days[k1][k2].selected;
@@ -928,8 +982,8 @@ export default {
       } else {
         // 取消上次选中
         if (this.today.length > 0) {
-          this.days.forEach(v => {
-            v.forEach(vv => {
+          this.days.forEach((v) => {
+            v.forEach((vv) => {
               vv.selected = false;
             });
           });
@@ -943,7 +997,7 @@ export default {
           this.zero ? this.zeroPad(this.month + 1) : this.month + 1,
           this.zero
             ? this.zeroPad(this.days[k1][k2].day)
-            : this.days[k1][k2].day
+            : this.days[k1][k2].day,
         ]);
       }
     },
@@ -962,7 +1016,7 @@ export default {
       this.yearsShow = false;
       this.year = value;
       this.render(this.year, this.month);
-      this.$emit("selectYear", value);
+      this.$emit("select-year", value);
     },
     // 返回今天
     setToday() {
@@ -972,8 +1026,8 @@ export default {
       this.day = now.getDate();
       this.render(this.year, this.month);
       // 遍历当前日找到选中
-      this.days.forEach(v => {
-        let day = v.find(vv => {
+      this.days.forEach((v) => {
+        let day = v.find((vv) => {
           return vv.day == this.day && !vv.disabled;
         });
         if (day != undefined) {
@@ -984,7 +1038,7 @@ export default {
     // 日期补零
     zeroPad(n) {
       return String(n < 10 ? "0" + n : n);
-    }
-  }
+    },
+  },
 };
 </script>

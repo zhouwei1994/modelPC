@@ -1,4 +1,7 @@
-import { createStore } from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+
+Vue.use(Vuex);
 const files = require.context("./modules", false, /\.js$/);
 let modules = {
   state: {},
@@ -10,4 +13,4 @@ files.keys().forEach((key) => {
   Object.assign(modules.mutations, files(key)["mutations"]);
   Object.assign(modules.actions, files(key)["actions"]);
 });
-export default createStore(modules)
+export default new Vuex.Store(modules);

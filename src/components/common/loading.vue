@@ -3,7 +3,7 @@
     <div class="loading_mask"></div>
     <div class="loading_toast">
       <spinner type="android" />
-      <p class="loading_content">{{ text || '加载中' }}</p>
+      <p class="loading_content">{{ text || "加载中" }}</p>
     </div>
   </div>
 </template>
@@ -12,20 +12,19 @@ import Spinner from "./spinner/index.vue";
 import { mapState } from "vuex";
 export default {
   components: {
-    Spinner
+    Spinner,
   },
-   computed: {
+  computed: {
     ...mapState(["loading"]),
   },
   props: {
     // eslint-disable-next-line vue/require-default-prop
-    text: String
-  }
+    text: String,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/mixin";
 .loading_box .loading_mask {
   position: fixed;
   top: 0;

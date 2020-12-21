@@ -2,7 +2,6 @@ import request from "@/plugins/request";
 import store from '@/store';
 import base from '@/config/baseUrl';
 import router from '@/router';
-
 import {
 	prompt,
 	$alert
@@ -18,13 +17,13 @@ let $http = new request({
 	//设置请求头（如果使用报错跨域问题，可能是content-type请求类型和后台那边设置的不一致）
 	header: {
 		'Content-Type': 'application/json;charset=UTF-8',
-		// 'project_token': base.projectToken, //项目token（可删除）
+		'project_token': base.projectToken, //项目token（可删除）
 	}
 });
 // 添加获取七牛云token的方法
-$http.getQnToken = function(callback){
+$http.getQnToken = function (callback) {
 	//该地址需要开发者自行配置（每个后台的接口风格都不一样）
-	$http.get("api/common/v1/qn_upload").then(data => {
+	$http.get("api/open/v1/qn_upload").then(data => {
 		/*
 		 *接口返回参数：
 		 *visitPrefix:访问文件的域名
@@ -40,7 +39,7 @@ $http.getQnToken = function(callback){
 	});
 }
 //请求开始拦截器
-$http.requestStart = function(options) {
+$http.requestStart = function (options) {
 	console.log("请求开始", options);
 	if (options.load) {
 		//打开加载动画
@@ -53,10 +52,7 @@ $http.requestStart = function(options) {
 		for (let item of options.files) {
 			if (item.size > maxSize) {
 				setTimeout(() => {
-					uni.showToast({
-						title: "图片过大，请重新上传",
-						icon: "none"
-					});
+					prompt("图片过大，请重新上传");
 				}, 500);
 				return false;
 			}
@@ -65,11 +61,11 @@ $http.requestStart = function(options) {
 	//请求前加入token
 	if (store.state.userInfo.token) {
 		options.header['user_token'] = store.state.userInfo.token;
-	};
+	}
 	return options;
 }
 //请求结束
-$http.requestEnd = function(options) {
+$http.requestEnd = function (options) {
 	//判断当前接口是否需要加载动画
 	if (options.load) {
 		// 关闭加载动画
@@ -78,7 +74,7 @@ $http.requestEnd = function(options) {
 }
 let loginPopupNum = 0;
 //所有接口数据处理（此方法需要开发者根据各自的接口返回类型修改，以下只是模板）
-$http.dataFactory = async function(res) {
+$http.dataFactory = async function (res) {
 	console.log("接口请求数据", {
 		url: res.url,
 		resolve: res.response,
@@ -86,13 +82,12 @@ $http.dataFactory = async function(res) {
 		data: res.data,
 		method: res.method,
 	});
-	if (res.response.statusCode && res.response.statusCode == 200) {
-		let httpData = res.response.data;
-		if(typeof(httpData) == "string"){
+	if (res.response.status && res.response.status == 200) {
+		let httpData = res.response.response;
+		if (typeof (httpData) == "string") {
 			httpData = JSON.parse(httpData);
 		}
 		/*********以下只是模板(及共参考)，需要开发者根据各自的接口返回类型修改*********/
-
 		//判断数据是否请求成功
 		if (httpData.success || httpData.code == 200) {
 			// 返回正确的结果(then接受数据)
@@ -111,17 +106,16 @@ $http.dataFactory = async function(res) {
 					cancelText: "再逛会",
 				}, function (res) {
 					loginPopupNum--;
-					if (res.confirm) { 
+					if (res.confirm) {
 						router.push('/login');
 					}
-					
 				});
 			}
 			// #endif
 			// 返回错误的结果(catch接受数据)
 			return Promise.reject({
 				statusCode: 0,
-				errMsg: "【request】" +  (httpData.info || httpData.msg),
+				errMsg: "【request】" + (httpData.info || httpData.msg),
 				data: res.data
 			});
 		} else if (httpData.code == "1004") {
@@ -152,11 +146,11 @@ $http.dataFactory = async function(res) {
 			// 返回错误的结果(catch接受数据)
 			return Promise.reject({
 				statusCode: 0,
-				errMsg: "【request】" +  (httpData.info || httpData.msg),
+				errMsg: "【request】" + (httpData.info || httpData.msg),
 				data: res.data
 			});
 		}
-        
+
 		/*********以上只是模板(及共参考)，需要开发者根据各自的接口返回类型修改*********/
 
 	} else {
@@ -169,9 +163,9 @@ $http.dataFactory = async function(res) {
 	}
 };
 // 错误回调
-$http.requestError = function(e){
+$http.requestError = function (e) {
 	// e.statusCode === 0 是参数效验错误抛出的
-	if(e.statusCode === 0){
+	if (e.statusCode === 0) {
 		throw e;
 	} else {
 		console.log(e);

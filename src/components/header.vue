@@ -1,21 +1,15 @@
 <template>
   <div>
     <!-- 头部 -->
-    <header class="header" :class="{ white: white || scrollState, line: line || scrollState }">
-      <div class="header_center">
-        
-      </div>
+    <header class="header">
     </header>
-    <div v-if="white" class="standing"></div>
+    <div class="standing"></div>
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   props: {
-    white: {
-      type: Boolean,
-      default: false,
-    },
     line: {
       type: Boolean,
       default: false,
@@ -24,14 +18,16 @@ export default {
   data() {
     return {
       scrollState: false,
-      serviceList: [],
     };
+  },
+  computed: {
+    ...mapState(["userInfo"]),
   },
   created() {
   },
-  mounted() {
-  },
+  mounted() { },
   methods: {
+    ...mapMutations(["emptyUserInfo"]),
     onPageJump(url) {
       this.$router.push(url);
     },
@@ -39,8 +35,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/style/mixin.scss";
 .standing {
-  height: 100px;
+  height: 120px;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
 }
 </style>

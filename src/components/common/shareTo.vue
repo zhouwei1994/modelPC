@@ -1,48 +1,45 @@
 <template>
-    <div class="shareToBox">
-      <div>
-        <div class="arrow"></div>
-        <div class="shareList" @click="onQqSpace">
-          <i class="icon">&#xe61d;</i>
-          <span>QQ空间</span>
-        </div>
-        <div class="shareList" @click="onQqFriends">
-          <i class="icon">&#xe752;</i>
-          <span>QQ好友</span>
-        </div>
-        <div class="shareList" @click="onWeibo">
-          <i class="icon">&#xe65b;</i>
-          <span>新浪微博</span>
-        </div>
-        <div class="shareList">
-          <i class="icon">&#xe626;</i>
-          <span>微信扫一扫</span>
-        </div>
-        <div class="shareCanvas" ref="shareCanvas"></div>
+  <div class="shareToBox">
+    <div>
+      <div class="arrow"></div>
+      <div class="shareList" @click="onQqSpace">
+        <i class="icon">&#xe61d;</i>
+        <span>QQ空间</span>
       </div>
+      <div class="shareList" @click="onQqFriends">
+        <i class="icon">&#xe752;</i>
+        <span>QQ好友</span>
+      </div>
+      <div class="shareList" @click="onWeibo">
+        <i class="icon">&#xe65b;</i>
+        <span>新浪微博</span>
+      </div>
+      <div class="shareList">
+        <i class="icon">&#xe626;</i>
+        <span>微信扫一扫</span>
+      </div>
+      <div class="shareCanvas" ref="shareCanvas"></div>
     </div>
+  </div>
 </template>
 <script>
 import QRCode from "qrcodejs2";
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     value: {
       type: Object,
-      default: {
-        title: "",
-        url: "",
-        imgUrl: "",
-        msg: ""
-      }
-    }
-  },
-  created() {},
-  watch: {
-    value(val) {}
+      default: function () {
+        return {
+          title: "",
+          url: "",
+          imgUrl: "",
+          msg: "",
+        };
+      },
+    },
   },
   methods: {
     //QQ空间分享
@@ -79,7 +76,6 @@ export default {
         "http://p5idrgkxe.bkt.clouddn.com/file/upload/201804/16/25cacd68c1ad48e48c1a7083af76f6b4";
       // 链接
       var url = this.value.url || window.location.href;
-      console.log(this.value.url , window.location.href);
       //简介
       var msg = this.value.msg || "不知道说点什么，快点进来看看吧！";
       window.open(
@@ -119,18 +115,18 @@ export default {
       // 链接
       var url = this.value.url || window.location.href;
       var shareCanvas = this.$refs.shareCanvas;
-      var qrcode = new QRCode(shareCanvas, {
+      new QRCode(shareCanvas, {
         text: url,
         width: 150,
         height: 150,
         colorDark: "#000000",
-        colorLight: "#ffffff"
+        colorLight: "#ffffff",
       });
-    }
+    },
   },
   mounted() {
     this.onWeChat();
-  }
+  },
 };
 </script>
 <style lang="scss">

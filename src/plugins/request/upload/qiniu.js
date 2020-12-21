@@ -105,7 +105,7 @@ export default function (files, wh, length) {
         });
       }
       //文件开始上传
-      var subscription = observable.subscribe(
+      observable.subscribe(
         res => {
           //图片上传进度
           console.log("图片上传进度", res.total.percent);

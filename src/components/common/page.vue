@@ -1,9 +1,29 @@
 <template>
   <div class="page-box page-center">
     <div class="page-content">
-      <div class="page-btn" :class="{'none': currentIndex == 1}" @click="previous">上一页</div>
-      <div class="page-btn" :class="{'act':currentIndex == item,'more':item == '...'}" @click="current(item)" v-for="(item,index) of pageList" :key="index">{{item}}</div>
-      <div class="page-btn" :class="{'none': total <= currentIndex}" @click="next">下一页</div>
+      <div
+        class="page-btn"
+        :class="{ none: currentIndex == 1 }"
+        @click="previous"
+      >
+        上一页
+      </div>
+      <div
+        class="page-btn"
+        :class="{ act: currentIndex == item, more: item == '...' }"
+        @click="current(item)"
+        v-for="(item, index) of pageList"
+        :key="index"
+      >
+        {{ item }}
+      </div>
+      <div
+        class="page-btn"
+        :class="{ none: total <= currentIndex }"
+        @click="next"
+      >
+        下一页
+      </div>
     </div>
   </div>
 </template>
@@ -13,29 +33,29 @@ export default {
   props: {
     currentPage: {
       type: Number,
-      default: 1
+      default: 1,
     },
     // eslint-disable-next-line vue/require-prop-types
     total: {
-      default: ""
+      default: "",
     },
     totalPage: {
       type: Number,
       default() {
         return 9;
-      }
+      },
     },
     last: {
       type: Boolean,
       default() {
         return true;
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       currentIndex: 1,
-      pageList: []
+      pageList: [],
     };
   },
   watch: {
@@ -45,7 +65,7 @@ export default {
     currentPage(newVal) {
       this.currentIndex = newVal;
       this.pageData();
-    }
+    },
   },
   created() {
     if (this.currentPage) {
@@ -125,14 +145,13 @@ export default {
         this.pageData();
         this.$emit("change", this.currentIndex);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@/style/mixin.scss";
-$height:50px;
+$height: 28px;
 .page-box {
   padding: 20px 0 40px 0;
   display: flex;
@@ -145,11 +164,12 @@ $height:50px;
       height: 100%;
       min-width: $height;
       text-align: center;
-      // margin: 0 7px;
+      margin: 0 7px;
       font-size: 14px;
       color: #666;
+      border-radius: 4px;
       cursor: pointer;
-      background-color: #FFF;
+      background-color: #fff;
       &.none {
         color: #aeaeae;
       }
@@ -160,7 +180,7 @@ $height:50px;
         background-color: inherit;
       }
       &.act {
-        background-color:$themeColor;
+        background-color: $themeColor;
         color: #fff;
         border-color: #f1f1f1;
         border-width: 2px 0;

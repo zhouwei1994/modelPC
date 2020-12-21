@@ -1,20 +1,16 @@
-exports.state = {
+import { getStorage } from '@/plugins/utils';
+export const state = {
   loading: false,
 };
 //缓存浏览器的数据名称
 const cacheNameList = ["userInfo"];
 let clearTime;
-exports.mutations = {
+export const mutations = {
   //取出缓存数据（打开APP就取出）
   setCacheData(state) {
     for (let name of cacheNameList) {
-      let data = sessionStorage.getItem(name) || localStorage.getItem(name);
+      let data = getStorage(name);
       if (data) {
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          console.log(e);
-        }
         state[name] = data;
       }
     }
@@ -23,7 +19,7 @@ exports.mutations = {
   setLoading(state, data) {
     if (state.loading) {
       clearTime && clearTimeout(clearTime);
-      clearTime = setTimeout(function() {
+      clearTime = setTimeout(function () {
         state.loading = data;
       }, 300);
     } else {
@@ -31,4 +27,4 @@ exports.mutations = {
     }
   },
 };
-exports.actions = {};
+export const actions = {};

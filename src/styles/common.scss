@@ -1,12 +1,23 @@
-@import "@/style/mixin.scss";
-.content_center {
-  min-width: 1200px;
-}
 .page_center {
-  width: 1200px;
-  min-width: 1200px;
+  width: 1280px;
+  min-width: 1280px;
   margin: 0 auto;
 }
+//确认按钮
+.comfirm_btn{
+		width: 180px;
+		height: 42px;
+		background-color: #ef3840;
+		border-radius: 4px;
+		color: #ffffff;
+		margin-top: 40px;
+		margin-left: 83px;
+		&.active{
+			border: solid 1px #ef3840;
+			background-color: #ffffff;
+			color: #ef3840;
+		}
+	}
 
 //弹出框
 .prompt {
@@ -36,7 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 500;
+  z-index: 1000;
 
   .alertPopups {
     width: 420px;
@@ -137,8 +148,6 @@
 
           &:hover {
             color: $themeColor;
-            border-color: #c6e2ff;
-            background-color: #ecf5ff;
             opacity: 0.8;
           }
         }
@@ -156,4 +165,45 @@
       }
     }
   }
+}
+
+.breadcrumb_box {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  > div, > a {
+    font-size: 12px;
+    color: #333333;
+  }
+  a {
+    cursor: pointer;
+  }
+  span {
+    padding: 0 20px;
+    color: #999999;
+  }
+  select {
+    width: 100px;
+    height: 28px;
+    background-color: #f7f7f7;
+    border-radius: 2px;
+    border: solid 1px #e5e5e5;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #333333;
+  }
+}
+
+.u-flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.u-flex-m {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
 }

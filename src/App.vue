@@ -2,30 +2,34 @@
   <div>
     <router-view />
     <!-- 加载动画 -->
-    <loading v-model="loading" />
+    <z-loading v-model="loading" />
   </div>
 </template>
 
 <script>
 // 加载动画
-import loading from "@/components/common/loading";
-
+import zLoading from "@/components/common/loading";
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    loading
+    zLoading,
   },
- 
-  created(){ 
-    
+  computed: {
+    ...mapState(["loading"]),
   },
-  mounted() {
-    
+  created() {
+    this.setCacheData();
   },
-}
+  methods: {
+    ...mapMutations(["setCacheData"]),
+  },
+  mounted() {},
+};
 </script>
 
 <style lang="scss">
-@import "@/style/common.scss";
-@import "@/style/reset.scss";
+@import "@/styles/reset.scss";
+@import "@/styles/common.scss";
+@import "@/styles/form_input.scss";
 </style>

@@ -38,23 +38,8 @@ body {
 }
 a {
   text-decoration: none;
+  color: #333;
 }
-a:link {
-  color: #fff;
-}
-
-a:visited {
-  color: #fff;
-}
-
-a:hover {
-  color: #fff;
-}
-
-a:active {
-  color: #fff;
-}
-
 input::-ms-clear {
   display: none;
 }

@@ -2,63 +2,65 @@
   <div class="calendarPendant">
     <div class="calendarInput" @click.stop="onShow">
       <slot>
-        <input type="text" v-model="calendar.name">
+        <input type="text" v-model="calendarData.name" />
       </slot>
     </div>
     <transition name="calendar">
       <div class="calendarBody" v-show="calendarShow">
         <span class="arrow"></span>
         <slot name="calendar">
-          <calendar
-            :range="calendar.range"
-            :zero="calendar.zero"
-            :begin="calendar.begin || []"
-            :end="calendar.end || []"
-            :lunar="calendar.lunar"
-            :value="calendar.value"
+          <z-calendar
+            :range="calendarData.range"
+            :zero="calendarData.zero"
+            :begin="calendarData.begin || []"
+            :end="calendarData.end || []"
+            :lunar="calendarData.lunar"
+            :value="calendarData.value"
             @select="calendarChange"
-          ></calendar>
+          ></z-calendar>
         </slot>
       </div>
     </transition>
   </div>
 </template>
 <script>
-import calendar from "./calendar";
+import zCalendar from "@/components/common/calendar/index";
 export default {
   components: {
-    calendar
+    zCalendar,
   },
   props: {
     value: {
       type: Boolean,
-      default: false
+      default: false,
     },
     calendar: {
       type: Object,
-      default: {
-        name: "2018-1-1",
-        value: [2018, 1, 1], //默认日期
-        begin: [2015, 1, 1],
-        end: [2018, 1, 1],
-        lunar: true, //显示农历
-        select: begin => {
-          console.log(begin);
-        }
-      }
-    }
+      default: function () {
+        return {
+          name: "",
+          // value: [2018, 1, 1], //默认日期
+          // begin: [2015, 1, 1],
+          // end: [2018, 1, 1],
+          lunar: true, //显示农历
+        };
+      },
+    },
   },
   data() {
     return {
-      calendarShow: false
+      calendarShow: false,
+      calendarData: {},
     };
   },
   watch: {
     value(val) {
       this.calendarShow = val;
-    }
+    },
   },
-  created() {},
+  created() {
+    this.calendarData = this.calendar;
+  },
   methods: {
     onShow() {
       this.$emit("input", true);
@@ -67,37 +69,21 @@ export default {
     calendarChange(val) {
       this.$emit("input", false);
       this.calendarShow = false;
-      this.calendar.select(val);
-    }
+      this.$emit("change", val);
+      // this.calendar.select(val);
+    },
   },
   mounted() {
-    document.body.onclick = () => {
-      this.calendarShow = false;
-      this.$emit("input", false);
-      var children = this.$parent.$parent.$children;
-      for (var item of children) {
-        if (item.calendarShow) {
-          item.calendarShow = false;
-        }
-        findChildren(item.$children);
-      }
-      function findChildren(data) {
-        for (var itemChild of data) {
-          if (itemChild.calendarShow) {
-            itemChild.calendarShow = false;
-          }
-          if (itemChild.$children.length > 0) {
-            findChildren(itemChild.$children);
-          }
-        }
-      }
-    };
-  }
+    const _this = this;
+    document.body.addEventListener("click", function () {
+      _this.calendarShow = false;
+      _this.$emit("input", false);
+    });
+  },
 };
 </script>
 
 <style lang="scss">
-@import "../../style/mixin";
 .calendarPendant {
   position: relative;
   input {

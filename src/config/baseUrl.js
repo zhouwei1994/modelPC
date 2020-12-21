@@ -1,11 +1,10 @@
 let baseUrl = "";
 if (process.env.NODE_ENV === 'development') {
 	// 开发环境
-	// baseUrl = "http://localhost:7001/";
-	baseUrl = "https://twin-ui.com/";
+	baseUrl = "http://dev.kemean.net/rong_pai/";
 } else if (process.env.NODE_ENV === 'production') {
 	// 生产环境
-	baseUrl = "https://twin-ui.com/";
+	baseUrl = "http://dev.kemean.net/rong_pai/";
 }
 const courtConfig = {
 	//微信公众号APPID
@@ -14,6 +13,7 @@ const courtConfig = {
 	baseUrl: baseUrl,
 	//平台名称
 	platformName: "uniApp-案例",
+	projectToken: "rongpai",
 	//项目logo
 	logoUrl: "https://qn.kemean.cn/upload/201906/19/3f3b4751f3ed4a97be804450c3ec4c79",
 };
