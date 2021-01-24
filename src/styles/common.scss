@@ -141,7 +141,7 @@
         font-size: 12px;
         border-radius: 3px;
 
-        &:nth-child(1) {
+        &.alertCancel {
           background: #fff;
           border: 1px solid #dcdfe6;
           color: #606266;
@@ -152,7 +152,7 @@
           }
         }
 
-        &:last-child {
+        &.alertConfirm {
           background: $themeColor;
           border: 1px solid $themeColor;
           color: #fff;
